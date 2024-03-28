@@ -12,17 +12,17 @@
 
     sudo apt-cache policy docker-ce
 
-    sudo apt install docker-ce
+    sudo apt install docker-ce -y
 
-    sudo systemctl status docker
+    sudo systemctl enable docker
 ```
 
 - Executing the Docker Command Without Sudo
 ```sh
-    sudo usermod -aG docker ${USER}
-
-    su - ${USER}
+    sudo -i
+    usermod -aG docker ubuntu
 ```
+- reload terminal to apply config
 
 - install jenkins on docker
 ```sh
@@ -40,17 +40,17 @@ apt install nginx -y
 - create a config file for new domain of jenkins server
 ```sh
 cd /etc/nginx
-vi conf.d/jenkins.stephendevops.tech.conf
+vi conf.d/jenkins.stephendevs.io.vn.conf
 ```
 
 - content of config
 ```
 server{
 	listen 80;
-	server_name jenkins.stephendevops.tech;
+	server_name jenkins.stephendevs.io.vn;
 	
 	location / {
-		proxy_pass http://jenkins.stephendevops.tech:8080;
+		proxy_pass http://jenkins.stephendevs.io.vn:8080;
 		proxy_http_version 1.1;
 		proxy_set_header Upgrade $http_upgrade;
 		proxy_set_header Connection keep-alive;
@@ -70,7 +70,7 @@ sudo systemctl enable nginx
 
 - run command to find password after install jenkins
 ```sh
-    docker exec jenkins-server cat /var/lib/jenkins/secrets/initialAdminPassword
+    docker exec jenkins-server cat /var/jenkins_home/secrets/initialAdminPassword
 ```
 
 - create admin account
