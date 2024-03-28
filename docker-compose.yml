@@ -1,0 +1,43 @@
+version: "3.8"
+name: springboot-mysql-compose
+
+services:
+  app:
+    container_name: quanndm2906-springboot
+    image: quanndm2906/springboot
+    env_file:
+      - .env
+    ports:
+      - "8082:8080"
+    restart: on-failure
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - java-app
+
+  mysql:
+    container_name: quanndm2906-java-mysql
+    image: "mysql:8.0"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3306"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    volumes:
+    - ./script:/docker-entrypoint-initdb.d/:ro
+      - quanndm2906-java-mysql-data:/var/lib/mysql
+    networks:
+      - java-app
+
+volumes:
+  quanndm2906-java-mysql-data:
+networks:
+  java-app:
+    name: java-app

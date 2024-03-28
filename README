@@ -1,0 +1,5 @@
+## Devops project: core project
+Stack: jenkins, terraform, docker
+
+## Installation
+- read the file in installation\jenkins-install-config.md

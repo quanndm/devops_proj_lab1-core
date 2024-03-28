@@ -1,0 +1,4 @@
+.metadata/
+./target
+./my-project-kp.pem
+./vm/.terraform
