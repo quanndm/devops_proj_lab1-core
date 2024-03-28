@@ -10,6 +10,10 @@ output "QA_public_IP" {
   value = aws_instance.QA.public_ip
 }
 
+output "QA_public_DNS" {
+  value = aws_instance.QA.public_dns
+}
+
 output "Staging_instance_id" {
   value = aws_instance.Staging.id
 }
@@ -22,6 +26,10 @@ output "Staging_public_IP" {
   value = aws_instance.Staging.public_ip
 }
 
+output "Staging_public_DNS" {
+  value = aws_instance.Staging.public_dns
+}
+
 output "Jenkins_Server_instance_id" {
   value = aws_instance.Jenkins-server-instance.id
 }
@@ -32,4 +40,8 @@ output "Jenkins_Server_private_IP" {
 
 output "Jenkins_Server_public_IP" {
   value = aws_instance.Jenkins-server-instance.public_ip
+}
+
+output "Jenkins_Server_public_DNS" {
+  value = aws_instance.Jenkins-server-instance.public_dns
 }
