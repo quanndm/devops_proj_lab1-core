@@ -21,6 +21,9 @@
 ```sh
     sudo -i
     usermod -aG docker ubuntu
+    chown root:docker -R /var/run/docker.sock
+    chmod 660 -R /var/run/docker.sock
+
 ```
 - reload terminal to apply config
 
