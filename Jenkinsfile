@@ -7,6 +7,8 @@ pipeline {
     }
     environment {
         MYSQL_ROOT_LOGIN = credentials('mysql-root-login')
+        REGISTRY_LOGIN= credentials('dockerhub')
+        REGISTRY_URL="registry-1.docker.io/v1"
         MYSQL_ROOT_PASSWORD="${MYSQL_ROOT_LOGIN_PSW}"
         MYSQL_DATABASE="db_example"
         MYSQL_USER="quanndm2906"
@@ -26,10 +28,9 @@ pipeline {
 
             steps {
                 script {
-                    withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v2/') {
-                        def dockerimg = docker.build("quanndm2906/springboot")
-                        dockerimg.push()
-                    }
+                    sh "docker login -u ${REGISTRY_URL_USR} -p ${REGISTRY_URL_PSW} ${REGISTRY_URL}"
+                    sh 'docker build -t quanndm2906/springboot .'
+                    sh 'docker push quanndm2906/springboot'
                 }
             }
         }
@@ -39,9 +40,8 @@ pipeline {
             steps {
                 echo 'Deploying and cleaning'
                 sh 'docker compose down'
-                withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v2/') {
-                    sh 'docker pull quanndm2906/springboot'
-                }
+                sh "docker login -u ${REGISTRY_URL_USR} -p ${REGISTRY_URL_PSW} ${REGISTRY_URL}"
+                sh 'docker pull quanndm2906/springboot'
                 sh "docker compose up -d -e MYSQL_PASSWORD=${MYSQL_PASSWORD} -e MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD} -e MYSQL_DATABASE=${MYSQL_DATABASE} -e MYSQL_USER=${MYSQL_USER}"
             }
         }
