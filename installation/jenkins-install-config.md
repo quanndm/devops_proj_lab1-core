@@ -17,14 +17,14 @@
     sudo systemctl restart docker
     sudo systemctl enable docker
 ```
-- update permission for install-jenkins.sh file
+- update permission for install-docker.sh file
 ```sh
-sudo chmod 760 install-jenkins.sh
+sudo chmod 760 install-docker.sh
 ```
 
-- run install-jenkins.sh file
+- run install-docker.sh file
 ```sh
-./install-jenkins.sh
+./install-docker.sh
 ```
 
 - Executing the Docker Command Without Sudo
@@ -93,7 +93,7 @@ sudo systemctl enable nginx
   -  Fullname: admin
   -  E-mail address: admin@example.com 
   
-- install plugin: docker, docker pipeline, maven integration
+- install plugin: docker, docker pipeline, maven integration, blue ocean
 - restart docker container jenkins-server
 
 - Manage Jenkins -> Tools -> Maven installation -> Add Maven: 

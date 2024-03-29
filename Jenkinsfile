@@ -28,9 +28,9 @@ pipeline {
 
             steps {
                 script {
-                    sh "docker login -u $REGISTRY_LOGIN_USR -p $REGISTRY_LOGIN_PSW ${REGISTRY_URL}"
                     sh 'docker build -t quanndm2906/springboot .'
-                    sh 'docker push quanndm2906/springboot'
+                    sh "docker logout"
+                    sh(script: """ docker login -u $REGISTRY_LOGIN_USR -p $REGISTRY_LOGIN_PSW ${REGISTRY_URL};  docker push quanndm2906/springboot """)
                     sh 'docker rmi quanndm2906/springboot'
                 }
             }
@@ -41,8 +41,7 @@ pipeline {
             steps {
                 echo 'Deploying and cleaning'
                 sh 'docker compose down'
-                sh "docker login -u $REGISTRY_LOGIN_USR -p $REGISTRY_LOGIN_PSW ${REGISTRY_URL}"
-                sh 'docker pull quanndm2906/springboot'
+                sh(script: """docker login -u $REGISTRY_LOGIN_USR -p $REGISTRY_LOGIN_PSW ${REGISTRY_URL}; docker pull quanndm2906/springboot""")
                 sh "docker compose up -d -e MYSQL_PASSWORD=$MYSQL_PASSWORD -e MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD -e MYSQL_DATABASE=${MYSQL_DATABASE} -e MYSQL_USER=$MYSQL_USER"
             }
         }
