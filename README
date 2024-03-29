@@ -2,4 +2,6 @@
 Stack: jenkins, terraform, docker
 
 ### install and config jenkins server
-- read the file in installation\jenkins-install-config.md
+- read the file in [jenkins-install-config.md](./installation/jenkins-install-config.md)
+
+### 

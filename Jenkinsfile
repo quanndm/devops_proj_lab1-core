@@ -37,6 +37,9 @@ pipeline {
             steps {
                 echo 'Deploying and cleaning'
                 sh 'docker compose down'
+                withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v1/') {
+                    sh 'docker pull quanndm2906/springboot'
+                }
                 sh "docker compose up -d -e MYSQL_PASSWORD=${MYSQL_PASSWORD} -e MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD} -e MYSQL_DATABASE=${MYSQL_DATABASE} -e MYSQL_USER=${MYSQL_USER}"
             }
         }
