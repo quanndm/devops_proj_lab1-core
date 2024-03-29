@@ -26,8 +26,8 @@ pipeline {
 
             steps {
                 withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v2/') {
-                    sh 'docker build -t quanndm2906/springboot .'
-                    sh 'docker push quanndm2906/springboot'
+                    def dockerimg = docker.build("quanndm2906/springboot")
+                    dockerimg.push()
                 }
             }
         }
