@@ -14,7 +14,17 @@
 
     sudo apt install docker-ce -y
 
+    sudo systemctl restart docker
     sudo systemctl enable docker
+```
+- update permission for install-jenkins.sh file
+```sh
+sudo chmod 760 install-jenkins.sh
+```
+
+- run install-jenkins.sh file
+```sh
+./install-jenkins.sh
 ```
 
 - Executing the Docker Command Without Sudo
@@ -25,7 +35,7 @@
     chmod 660 -R /var/run/docker.sock
 
 ```
-- reload terminal to apply config
+- reload terminal/session to apply config
 
 - install jenkins on docker
 ```sh
