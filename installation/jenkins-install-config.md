@@ -32,7 +32,7 @@ sudo chmod 760 install-docker.sh
     sudo -i
     usermod -aG docker ubuntu
     chown root:docker -R /var/run/docker.sock
-    chmod 660 -R /var/run/docker.sock
+    chmod 770 -R /var/run/docker.sock
 
 ```
 - reload terminal/session to apply config
