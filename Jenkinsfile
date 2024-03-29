@@ -22,12 +22,14 @@ pipeline {
         //     }
         // }
 
-        stage('Packaging/Pushing imagae') {
+        stage('Packaging/Pushing image') {
 
             steps {
-                withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v2/') {
-                    def dockerimg = docker.build("quanndm2906/springboot")
-                    dockerimg.push()
+                script {
+                    withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v2/') {
+                        def dockerimg = docker.build("quanndm2906/springboot")
+                        dockerimg.push()
+                    }
                 }
             }
         }
