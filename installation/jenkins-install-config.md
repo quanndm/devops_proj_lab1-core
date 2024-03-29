@@ -39,7 +39,7 @@ sudo chmod 760 install-docker.sh
 
 - install jenkins on docker
 ```sh
-    docker container run --name jenkins-server -d -p 8080:8080 --privileged -p 5000:5000 -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker  -v jenkins_home:/var/jenkins_home --group-add $(stat -c '%g' /var/run/docker.sock) jenkins/jenkins:2.451-jdk17
+    docker container run --name jenkins-server -d -p 8080:8080  -u root --privileged -p 5000:5000 -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker  -v jenkins_home:/var/jenkins_home --group-add $(stat -c '%g' /var/run/docker.sock) jenkins/jenkins:2.451-jdk17
 ```
 
 - Points the domain name to the IP address
