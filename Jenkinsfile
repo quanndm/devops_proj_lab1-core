@@ -7,10 +7,10 @@ pipeline {
     }
     environment {
         MYSQL_ROOT_LOGIN = credentials('mysql-root-login')
-        MYSQL_ROOT_PASSWORD=MYSQL_ROOT_LOGIN_PSW
+        MYSQL_ROOT_PASSWORD="${MYSQL_ROOT_LOGIN_PSW}"
         MYSQL_DATABASE="db_example"
         MYSQL_USER="quanndm2906"
-        MYSQL_PASSWORD= MYSQL_ROOT_LOGIN_PSW
+        MYSQL_PASSWORD= "${MYSQL_ROOT_LOGIN_PSW}"
     }
     stages {
 
