@@ -28,6 +28,7 @@ pipeline {
 
             steps {
                 script {
+                    sh "docker rmi quanndm2906/springboot || echo 'Image not found!'"
                     sh 'docker build -t quanndm2906/springboot .'
                     sh "docker logout"
                     sh(script: """ docker login -u $REGISTRY_LOGIN_USR -p $REGISTRY_LOGIN_PSW ${REGISTRY_URL};  docker push quanndm2906/springboot """)
