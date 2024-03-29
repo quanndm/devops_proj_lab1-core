@@ -87,12 +87,12 @@ locals {
 
 resource "aws_instance" "Jenkins-server-instance" {
   ami               = data.aws_ami.ubuntu.id
-  instance_type     = local.instance_type
+  instance_type     = "t2.medium"
   security_groups   = [aws_security_group.JenkinsServerSecurityGroup.name]
   key_name          = local.key_pair_name
 
   root_block_device {
-    volume_size = "12"
+    volume_size = "14"
     volume_type = "gp2"
   }
 
@@ -125,3 +125,18 @@ resource "aws_instance" "Staging" {
   }
 }
 
+# handle state of EC2
+resource "aws_ec2_instance_state" "Jenkins-Server-instance-state" {
+  instance_id = aws_instance.Jenkins-server-instance.id
+  state       = "running"
+}
+
+resource "aws_ec2_instance_state" "QA-instance-state" {
+  instance_id = aws_instance.QA.id
+  state       = "running"
+}
+
+resource "aws_ec2_instance_state" "Staging-instance-state" {
+  instance_id = aws_instance.Staging.id
+  state       = "running"
+}

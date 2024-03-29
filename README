@@ -1,7 +1,37 @@
-## Devops project: core project
-Stack: jenkins, terraform, docker
+## Devops project 1: core project
+Description: Build CICD pipeline basic with jenkins, terraform, docker and github
 
-### install and config jenkins server
-- read the file in [jenkins-install-config.md](./installation/jenkins-install-config.md)
+### Create VM(virtual machin)
+- At folder VM, run command below to download package and init terraform project
+    ```sh
+    terraform init
+    ```
+- Run command to create EC2 instance and some depend resource
+    ```sh
+    terraform apply --auto-approve
+    ```
+
+- To remove all resource, run command
+    ```sh
+    terraform destroy --auto-approve
+    ```
+
+- To see output, run command
+    ```sh
+    terraform output
+    ```
+### Install and config jenkins server
+- Read the file to setup Jenkin server in [jenkins-install-config.md](./installation/jenkins-install-config.md)
+
+- config docker of jenkins server instance
+  - modify file /lib/systemd/system/docker.service
+      ```sh
+      ExecStart=/usr/bin/dockerd -H unix://var/run/docker.sock -H tcp://172.31.24.237  --containerd=/run/containerd/containerd.sock
+      ```
+  - restart docker
+      ```sh
+      sudo systemctl reload-daemon
+      sudo systemctl restart docker
+      ```
 
 ### 
