@@ -40,7 +40,7 @@ pipeline {
             steps {
                 sh """
                     docker version
-                    docker-compose version
+                    docker compose version
                     pwd
                     whoami
                 """
