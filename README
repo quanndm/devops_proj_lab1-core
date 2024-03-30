@@ -30,7 +30,7 @@ Description: Build CICD pipeline basic with jenkins, terraform, docker and githu
       ```
   - restart docker
       ```sh
-      sudo systemctl reload-daemon
+      sudo systemctl daemon-reload
       sudo systemctl restart docker
       ```
 

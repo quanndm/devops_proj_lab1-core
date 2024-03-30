@@ -29,24 +29,23 @@ sudo chmod 760 install-docker.sh
 
 - Executing the Docker Command Without Sudo
 ```sh
-    sudo -i
+    sudo su
     usermod -aG docker ubuntu
     chown root:docker -R /var/run/docker.sock
     chmod 770 -R /var/run/docker.sock
 
+    chown root:docker -R /usr/libexec/docker/cli-plugins
+    chmod 775  -R /usr/libexec/docker/cli-plugins
 ```
 - reload terminal/session to apply config
 
-- install jenkins on docker
-```sh
-    docker container run --name jenkins-server -d -p 8080:8080  -u root --privileged -p 5000:5000 -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker  -v jenkins_home:/var/jenkins_home --group-add $(stat -c '%g' /var/run/docker.sock) jenkins/jenkins:2.451-jdk17
-```
+
 
 - Points the domain name to the IP address
 
 - install nginx
 ```sh
-sudo -i
+sudo su
 apt install nginx -y
 ```
 
@@ -79,6 +78,11 @@ server{
 ```sh
 sudo systemctl restart nginx
 sudo systemctl enable nginx
+```
+
+- install jenkins on docker
+```sh
+    docker container run --name jenkins-server -d -p 8080:8080  -u root --privileged -p 5000:5000 -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker -v /usr/libexec/docker/cli-plugins:/usr/libexec/docker/cli-plugins  -v jenkins_home:/var/jenkins_home --group-add $(stat -c '%g' /var/run/docker.sock) jenkins/jenkins:2.451-jdk17
 ```
 
 - run command to find password after install jenkins
