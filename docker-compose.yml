@@ -25,13 +25,13 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3306"]
+      test: [ "CMD", "curl", "-f", "http://localhost:3306" ]
       interval: 10s
       timeout: 5s
       retries: 3
       start_period: 30s
     volumes:
-    - ./script:/docker-entrypoint-initdb.d/:ro
+      - ./script:/docker-entrypoint-initdb.d/:ro
       - quanndm2906-java-mysql-data:/var/lib/mysql
     networks:
       - java-app
