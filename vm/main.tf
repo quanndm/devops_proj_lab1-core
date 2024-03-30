@@ -26,7 +26,12 @@ resource "aws_security_group" "instanceSecurityGroup" {
     to_port     = 80
     cidr_blocks = ["0.0.0.0/0"]
   }
-
+  ingress {
+    protocol    = "tcp"
+    from_port   = 8080
+    to_port     = 8080
+    cidr_blocks = ["0.0.0.0/0"]
+  }
   egress {
     from_port        = 0
     to_port          = 0
@@ -86,10 +91,10 @@ locals {
 }
 
 resource "aws_instance" "Jenkins-server-instance" {
-  ami               = data.aws_ami.ubuntu.id
-  instance_type     = "t2.medium"
-  security_groups   = [aws_security_group.JenkinsServerSecurityGroup.name]
-  key_name          = local.key_pair_name
+  ami             = data.aws_ami.ubuntu.id
+  instance_type   = "t2.medium"
+  security_groups = [aws_security_group.JenkinsServerSecurityGroup.name]
+  key_name        = local.key_pair_name
 
   root_block_device {
     volume_size = "14"
