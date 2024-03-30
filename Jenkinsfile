@@ -63,7 +63,7 @@ pipeline {
                     echo 'MYSQL_USER=${MYSQL_USER}' >> .env
                     echo 'MYSQL_PASSWORD=$MYSQL_PASSWORD' >> .env
                 """
-                sh "docker compose up -d --env-file .env"
+                sh "docker compose up -d"
             }
         }
  
