@@ -57,7 +57,13 @@ pipeline {
                     sh "docker rmi quanndm2906/springboot || echo 'Image not found!'"
                     sh "docker pull quanndm2906/springboot"
                 }                
-                sh "docker compose up -d -e MYSQL_PASSWORD=$MYSQL_PASSWORD -e MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD -e MYSQL_DATABASE=${MYSQL_DATABASE} -e MYSQL_USER=$MYSQL_USER"
+                sh """
+                    echo 'MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD' > .env
+                    echo 'MYSQL_DATABASE=${MYSQL_DATABASE}' >> .env
+                    echo 'MYSQL_USER=${MYSQL_USER}' >> .env
+                    echo 'MYSQL_PASSWORD=$MYSQL_PASSWORD' >> .env
+                """
+                sh "docker compose up -d --env-file .env"
             }
         }
  
