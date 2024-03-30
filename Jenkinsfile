@@ -24,6 +24,17 @@ pipeline {
         //     }
         // }
 
+        // stage('check info') {
+        //     steps {
+        //         sh """
+        //             docker version
+        //             docker compose version
+        //             pwd
+        //             whoami
+        //         """
+        //     }
+        // }
+
         stage('Packaging/Pushing image') {
 
             steps {
@@ -36,28 +47,19 @@ pipeline {
             }
         }
 
-        stage('check info') {
+
+
+        stage('Deploy to DEV') {
             steps {
-                sh """
-                    docker version
-                    docker compose version
-                    pwd
-                    whoami
-                """
+                echo 'Deploying and cleaning'
+                sh 'docker compose down'
+                withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v1/') {
+                    sh "docker rmi quanndm2906/springboot || echo 'Image not found!'"
+                    sh "docker pull quanndm2906/springboot"
+                }                
+                sh "docker compose up -d -e MYSQL_PASSWORD=$MYSQL_PASSWORD -e MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD -e MYSQL_DATABASE=${MYSQL_DATABASE} -e MYSQL_USER=$MYSQL_USER"
             }
         }
-
-        // stage('Deploy to DEV') {
-        //     steps {
-        //         echo 'Deploying and cleaning'
-        //         sh 'docker compose down'
-        //         withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v1/') {
-        //             sh "docker rmi quanndm2906/springboot || echo 'Image not found!'"
-        //             sh "docker pull quanndm2906/springboot"
-        //         }                
-        //         sh "docker compose up -d -e MYSQL_PASSWORD=$MYSQL_PASSWORD -e MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD -e MYSQL_DATABASE=${MYSQL_DATABASE} -e MYSQL_USER=$MYSQL_USER"
-        //     }
-        // }
  
     }
     post {
